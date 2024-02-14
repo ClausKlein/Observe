@@ -18,6 +18,7 @@ namespace observe {
       /**
        * Observers should remove themselves from their events once destroyed
        */
+      // TODO: -Wdeprecated-copy-with-user-provided-dtor
       virtual ~Base() {}
     };
 

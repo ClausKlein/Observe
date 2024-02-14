@@ -1,6 +1,7 @@
+---
 name: MacOS
 
-on: [push]
+on: [push, pull_request]
 
 env:
   CTEST_OUTPUT_ON_FAILURE: 1
@@ -8,18 +9,18 @@ env:
 jobs:
   build:
 
-    runs-on: macos-latest
-    
+    runs-on: macos-14
+
     steps:
-    - uses: actions/checkout@v1
-    
-    - name: configure
-      run: cmake -Htest -Bbuild
+      - uses: actions/checkout@v1
 
-    - name: build
-      run: cmake --build build --config Debug -j4
+      - name: configure
+        run: cmake -S test -B build
 
-    - name: test
-      run: |
-        cd build
-        ctest --build-config Debug
+      - name: build
+        run: cmake --build build --config Debug -j4
+
+      - name: test
+        run: |
+          cd build
+          ctest --build-config Debug

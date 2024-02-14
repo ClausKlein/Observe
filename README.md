@@ -25,12 +25,12 @@ void example() {
 
   // or have arguments
   observe::Event<std::string, float> eventB;
-  
+
   // connect will always trigger when an event is triggered
   eventA.connect([](){
     std::cout << "A triggered" << std::endl;
   });
-  
+
   // observers will remove themselves from the event on destroy or reset
   observe::Observer observer = eventB.createObserver([](const std::string &str, float v){ 
     std::cout << "B triggered with " << str << " and " << v << std::endl;
@@ -50,7 +50,7 @@ void example() {
 ```
 
 Note that events and observers are thread and exception safe, as long as the handlers manage their own resources.
-Handlers can safely remove observers (including themselves) from the event when beeing called.
+Handlers can safely remove observers (including themselves) from the event when being called.
 Thrown exceptions will propagate out of the `event.emit()` call.
 
 ### Using observe::Value
@@ -66,7 +66,7 @@ observe::Value b = 2;
 observe::DependentObservableValue sum([](auto a, auto b){ return a+b; },a,b);
 
 // all observable values contain an `Event` `onChange`
-sum.onChange.connect([](auto &v){ 
+sum.onChange.connect([](auto &v){
   std::cout << "The result changed to " << r << std::endl;
 });
 
@@ -88,5 +88,5 @@ CPMAddPackage(
   GITHUB_REPOSITORY TheLartians/Observe
 )
 
-target_link_libraries(myProject Observe)
+target_link_libraries(myProject Observe::Observe)
 ```

@@ -1,20 +1,23 @@
+---
 name: Style
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
 
-    runs-on: macos-latest
-    
+    runs-on: macos-14
+
     steps:
-    - uses: actions/checkout@v1
-    
-    - name: Install clang-format
-      run: brew install clang-format
+      - uses: actions/checkout@v1
 
-    - name: configure
-      run: cmake -Htest -Bbuild
+      - name: Install clang-format
+        run: |
+          brew install clang-format
+          pip3 install cmake_format==0.6.13 pyyaml
 
-    - name: check style
-      run: cmake --build build --target check-format
+      - name: configure
+        run: cmake -S test -B build
+
+      - name: check style
+        run: cmake --build build --target fix-format
